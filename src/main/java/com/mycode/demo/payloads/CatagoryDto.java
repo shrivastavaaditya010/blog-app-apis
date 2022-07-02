@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class catagoryDto {
+public class CatagoryDto {
 	private Integer catagoryId;
 	private String catagoryTitle;
 	private String catagoryDescription;

@@ -1,6 +1,7 @@
 package com.mycode.demo.services.impl;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,7 @@ public class CatagoryServiceImpl implements CatagoryService {
 
 	@Autowired
 	private CatagoryRepo catagoryRepo;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -29,37 +31,42 @@ public class CatagoryServiceImpl implements CatagoryService {
 	}
 
 	@Override
-	public CatagoryDto updateCatagory(CatagoryDto catagoryDto, Integer CatagoryId) {
-		Catagory cat = this.catagoryRepo.findById(CatagoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "Catagory Id", CatagoryId));
+	public CatagoryDto updateCatagory(CatagoryDto catagoryDto, Integer catagoryId) {
+
+		Catagory cat = this.catagoryRepo.findById(catagoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory ", "Catagory Id", catagoryId));
 
 		cat.setCatagoryTitle(catagoryDto.getCatagoryTitle());
 		cat.setCatagoryDescription(catagoryDto.getCatagoryDescription());
+
 		Catagory updatedcat = this.catagoryRepo.save(cat);
 
 		return this.modelMapper.map(updatedcat, CatagoryDto.class);
 	}
 
 	@Override
-	public void deleteCatagory(Integer CatagoryId) {
-		Catagory cat = this.catagoryRepo.findById(CatagoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Catagory ", "Catagory Id ", CatagoryId));
+	public void deleteCatagory(Integer catagoryId) {
 
+		Catagory cat = this.catagoryRepo.findById(catagoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory ", "catagory id", catagoryId));
 		this.catagoryRepo.delete(cat);
 	}
 
 	@Override
-	public CatagoryDto getCatagory(Integer CatagoryId) {
-		Catagory cat = this.catagoryRepo.findById(CatagoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Catagory ", "Catagory Id", CatagoryId));
-		
+	public CatagoryDto getCatagory(Integer catagoryId) {
+		Catagory cat = this.catagoryRepo.findById(catagoryId)
+				.orElseThrow(() -> new ResourceNotFoundException("Catagory", "catagory id", catagoryId));
+
 		return this.modelMapper.map(cat, CatagoryDto.class);
 	}
 
 	@Override
 	public List<CatagoryDto> getCatagories() {
+
 		List<Catagory> catagories = this.catagoryRepo.findAll();
-		List<CatagoryDto> catDtos = catagories.stream().map((cat)->this.modelMapper.map(catagories, CatagoryDto.class)).collect(Collectors.toList());
+		List<CatagoryDto> catDtos = catagories.stream().map((cat) -> this.modelMapper.map(cat, CatagoryDto.class))
+				.collect(Collectors.toList());
+
 		return catDtos;
 	}
 

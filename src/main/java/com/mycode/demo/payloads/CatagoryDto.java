@@ -8,7 +8,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CatagoryDto {
+
 	private Integer catagoryId;
+
 	private String catagoryTitle;
+
 	private String catagoryDescription;
+
 }

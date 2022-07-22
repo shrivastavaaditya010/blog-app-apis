@@ -2,7 +2,7 @@ package com.mycode.demo.controllers;
 
 import java.util.List;
 
-
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class CatagoryController {
 	// create
 
 	@PostMapping("/")
-	public ResponseEntity<CatagoryDto> createCatagory(@RequestBody CatagoryDto cateogDto) {
+	public ResponseEntity<CatagoryDto> createCatagory(@Valid @RequestBody CatagoryDto cateogDto) {
 		CatagoryDto createCatagory = this.catagoryService.createCatagory(cateogDto);
 		return new ResponseEntity<CatagoryDto>(createCatagory, HttpStatus.CREATED);
 	}
@@ -41,7 +41,7 @@ public class CatagoryController {
 	// update
 
 	@PutMapping("/{catId}")
-	public ResponseEntity<CatagoryDto> updateCategory(@RequestBody CatagoryDto catagoryDto,
+	public ResponseEntity<CatagoryDto> updateCategory(@Valid @RequestBody CatagoryDto catagoryDto,
 			@PathVariable Integer catId) {
 		CatagoryDto updatedCatagory = this.catagoryService.updateCatagory(catagoryDto, catId);
 		return new ResponseEntity<CatagoryDto>(updatedCatagory, HttpStatus.OK);

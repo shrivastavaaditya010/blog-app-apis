@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycode.demo.entities.Post;
 import com.mycode.demo.payloads.ApiResponse;
 import com.mycode.demo.payloads.CatagoryDto;
 import com.mycode.demo.payloads.PostDto;
+import com.mycode.demo.payloads.PostResponse;
 import com.mycode.demo.services.PostService;
 
 @RestController
@@ -64,11 +66,13 @@ public class PostController {
 	}
 	
 	//Get All Post
-	@GetMapping("/")
-	public ResponseEntity<List<PostDto>> getPosts() {
-
-		List<PostDto> Posts = this.postService.getAllPost();
-		return ResponseEntity.ok(Posts);
+	@GetMapping("/posts")
+	public ResponseEntity<PostResponse> getPosts(
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+			) {
+	PostResponse postResponse = this.postService.getAllPost(pageNumber, pageSize);
+		return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
 	}
 	
 	//Delete Post

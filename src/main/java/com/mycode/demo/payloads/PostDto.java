@@ -1,7 +1,11 @@
 package com.mycode.demo.payloads;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.mycode.demo.payloads.UserDto;
+import com.mycode.demo.entities.Comment;
 import com.mycode.demo.payloads.CatagoryDto;
 
 
@@ -23,4 +27,6 @@ public class PostDto {
 	private Date addedDate;
 	private CatagoryDto catagory;
 	private UserDto user;
+	
+	private Set<CommentDto> comments = new HashSet<>();
 }
